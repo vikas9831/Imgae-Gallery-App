@@ -1,3 +1,5 @@
+## Gallery app created using React and Flickr.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
