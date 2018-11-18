@@ -5,7 +5,7 @@ const Header = ({ search }) => {
 	// console.log(this.props.search);
 	return (
 		<div className='header'>
-			<h1>React Gallery</h1>
+			<h2>React Gallery</h2>
 			<SearchForm onSearch={search} />
 		</div>
 	);

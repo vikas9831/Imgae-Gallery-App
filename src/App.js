@@ -3,13 +3,15 @@ import axios from 'axios';
 import Header from './components/Header';
 import Gallery from './components/Gallery';
 import apiKey from './config.js';
-import './css/main.css';
+// import './css/main.css';
+import './css/index.css';
 
 
 class App extends Component {
   
   state = {
-      photos : []
+      photos : [],
+      loading: true
   }
 
   componentDidMount() {
@@ -17,15 +19,16 @@ class App extends Component {
   }  
 
   getPhotos = (query = 'sunsets') => {
-    axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&extras=url_s&format=json&nojsoncallback=1`)
+    axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&extras=url_m&format=json&nojsoncallback=1`)
       .then(response => {
         this.setState({
           photos: (response.data.photos.photo).map(photo => {
                     return {
-                      'url': photo.url_s,
+                      'url': photo.url_m,
                       'key': photo.id
                     };
-                  })
+                  }),
+          loading: false
       });
     })
     .catch(error => {
@@ -37,7 +40,11 @@ class App extends Component {
     return (
       <div className="App">
         <Header search={this.getPhotos} />
-        <Gallery photos={this.state.photos} />
+        {
+          (this.state.loading)
+          ? <p>Loading...</p>
+          : <Gallery photos={this.state.photos} />
+        }
       </div>
     );
   }

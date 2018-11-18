@@ -1,9 +1,15 @@
 import React from 'react';
+import NoImagesFound from './NoImagesFound';
 
 const Gallery = ({ photos }) => {
-	let images = photos.map(photos => <li key={photos.key}><img src={photos.url} alt=""  /></li> );
+	let images;
+	if(photos.length > 0){
+		images = photos.map(photos => <li key={photos.key}><img src={photos.url} alt=""  /></li> );
+	}else{
+		images = <NoImagesFound />
+	}
 	return (
-		<div className='gallery'>
+		<div className='photo-container'>
 			<ul>
 				{images}
 			</ul>
