@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import axios from 'axios';
 import Header from './components/Header';
 import Gallery from './components/Gallery';
+import PageNotFound from './components/PageNotFound';
 import apiKey from './config.js';
-// import './css/main.css';
 import './css/index.css';
 
 
@@ -11,14 +12,17 @@ class App extends Component {
   
   state = {
       photos : [],
-      loading: true
+      loading: false
   }
 
   componentDidMount() {
     this.getPhotos();
-  }  
+  }
 
   getPhotos = (query = 'sunsets') => {
+    this.setState({
+      loading: true
+    });
     axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&extras=url_m&format=json&nojsoncallback=1`)
       .then(response => {
         this.setState({
@@ -37,14 +41,33 @@ class App extends Component {
   }
 
   render() {
+    const paths = [
+      '/daftpunk',
+      '/nightsky',
+      '/world'    
+    ];
     return (
       <div className="App">
-        <Header search={this.getPhotos} />
-        {
-          (this.state.loading)
-          ? <p>Loading...</p>
-          : <Gallery photos={this.state.photos} />
-        }
+        <BrowserRouter>
+          <div>
+              <Header search={this.getPhotos} paths={paths} />
+              <Switch>
+                <Route exact path="/" />
+                { paths.map((path, index) => 
+                    <Route  path={path} 
+                            key={index} 
+                            render={ (props) => (
+                              //displays loading message before response
+                              (this.state.loading)
+                                ? <p> Loading... </p>
+                                :<Gallery photos={this.state.photos} /> 
+                            )} 
+                    />        
+                )}
+                <Route component={PageNotFound} />
+              </Switch>
+          </div>
+        </BrowserRouter>
       </div>
     );
   }
