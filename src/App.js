@@ -11,22 +11,34 @@ import './css/index.css';
 class App extends Component {
   
   state = {
-      photos : [],
-      loading: false
+      navOptions: [
+        'dogs', 
+        'milky way', 
+        'landscape'
+      ],
+      navOnePhotos : [],
+      navTwoPhotos: [],
+      navThreePhotos: [],
+      searched: [],
+      loading: false,
+      counter: true
   }
 
   componentDidMount() {
-    this.getPhotos();
+    this.getPhotos(this.state.navOptions[0], 'navOnePhotos');
+    this.getPhotos(this.state.navOptions[1], 'navTwoPhotos');
+    this.getPhotos(this.state.navOptions[2], 'navThreePhotos');
   }
 
-  getPhotos = (query = 'sunsets') => {
+  getPhotos = (query = 'sunsets', location) => {
     this.setState({
       loading: true
     });
+
     axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&extras=url_m&format=json&nojsoncallback=1`)
       .then(response => {
         this.setState({
-          photos: (response.data.photos.photo).map(photo => {
+          [location] : (response.data.photos.photo).map(photo => {
                     return {
                       'url': photo.url_m,
                       'key': photo.id
@@ -41,29 +53,40 @@ class App extends Component {
   }
 
   render() {
-    const paths = [
-      '/daftpunk',
-      '/nightsky',
-      '/world'    
+
+    const loading = <p> Loading... </p>;
+
+    const photos = [
+      this.state.navOnePhotos,
+      this.state.navTwoPhotos,
+      this.state.navThreePhotos,
+      this.state.searched
     ];
+
     return (
       <div className="App">
         <BrowserRouter>
           <div>
-              <Header search={this.getPhotos} paths={paths} />
+              <Header search={this.getPhotos} paths={this.state.navOptions} />
               <Switch>
-                <Route exact path="/" />
-                { paths.map((path, index) => 
-                    <Route  path={path} 
+                <Route exact path="/" />} />
+                { this.state.navOptions.map((opt, index) => 
+                    <Route  path={`/${opt}`} 
                             key={index} 
-                            render={ (props) => (
-                              //displays loading message before response
+                            render={ props => (
                               (this.state.loading)
-                                ? <p> Loading... </p>
-                                :<Gallery photos={this.state.photos} /> 
-                            )} 
+                                ? loading
+                                : <Gallery photos={photos[index]} />
+                            )}
                     />        
                 )}
+                <Route  path="/search/:input" 
+                        render={ props => (            
+                          (this.state.loading)
+                            ? loading
+                            : <Gallery photos={photos[3]} />
+                        )} 
+                />
                 <Route component={PageNotFound} />
               </Switch>
           </div>
