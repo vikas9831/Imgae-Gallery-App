@@ -7,7 +7,7 @@ const Header = ({ search, paths }) => {
 		<div className='header'>
 			<h2>React Gallery</h2>
 			<SearchForm onSearch={search} />
-			<Nav onClick={search} paths={paths} />
+			<Nav paths={paths} />
 		</div>
 	);
 };

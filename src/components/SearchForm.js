@@ -13,14 +13,13 @@ class SearchForm extends Component {
   
   handleSubmit = e => {
     e.preventDefault();
-    console.log(this.query.value);
+    //If input blank, message appears. Otherwise, path is pushed, onSearch fires and input resets
     if(this.query.value === ""){
       alert('Please enter something to search for.');  
     }else{
       let path = `/search/${this.query.value}`;
       this.props.history.push(path);
       this.props.onSearch(this.query.value, 'searched');
-      console.log(this.props);
       e.currentTarget.reset();
     }
   }
