@@ -2,7 +2,7 @@ import React from 'react';
 
 const NoImagesFound = () => (
   <div className="not-found">
-    <h3>Hello, very sorry but no images were found. Thanks!</h3>
+    <h3>No images found. Thanks.</h3>
   </div>
 );
 

@@ -53,7 +53,7 @@ class App extends Component {
   }
 
   render() {
-
+   
     const loading = <p> Loading... </p>;
     const photos = [
       this.state.navOnePhotos,
@@ -69,13 +69,14 @@ class App extends Component {
               <Header paths={this.state.navOptions} search={this.getPhotos} />
               <Switch>
                 <Route exact path="/" />} />
+                {/*Creates nav routes and decides which photo set is passed to Gallery props*/}
                 { this.state.navOptions.map((opt, index) => 
                     <Route  path={`/${opt}`} 
                             key={index} 
                             render={ props => (
                               (this.state.loading)
                                 ? loading
-                                : <Gallery photos={photos[index]} />
+                                : <Gallery photos={photos[index]} loading={this.state.loading} />
                             )}
                     />        
                 )}
