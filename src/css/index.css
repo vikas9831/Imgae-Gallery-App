@@ -2,6 +2,8 @@ body {
   text-align: center;
   font-family: 'Open Sans', sans-serif;
   color: #3f4850;
+  margin: 0;
+  padding: 0;
 }
 
 h2 {
@@ -19,24 +21,75 @@ a {
   text-decoration: none;
 }
 
-.search-form {
-  max-width: 460px;
+.header {
   display: flex;
-  margin: 0 auto 32px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #438bbd;
+  color: #fff;
+}
+
+.header .logo {
+  display: flex;
+  align-items: center;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: white;
+  margin-right: 20px;
+}
+
+.header .logo a {
+  color: white;
+  text-decoration: none;
+}
+
+.header .main-nav {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.header .main-nav ul {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.header .main-nav li {
+  margin: 0 10px;
+}
+
+.header .main-nav a {
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.header .main-nav a:hover {
+  background-color: #275270;
+}
+
+.search-form {
+  display: flex;
+  margin-left: auto;
 }
 
 .search-form button {
   outline: none;
   background-color: #438bbd;
   border: none;
-  padding: 0px 15px;
+  padding: 10px 15px;
   border-radius: 0 0.35em 0.35em 0;
   cursor: pointer;
+  color: white;
 }
 
-input {
+.search-form input {
   font-size: 1em;
-  width: 100%;
   background-color: #edeff0;
   padding: 10px 15px;
   border: 3px solid #d7dbdf;
@@ -45,30 +98,10 @@ input {
   outline: none;
 }
 
-.main-nav li {
-  width: 100%;
-  margin-bottom: 1em;
-}
-
-.main-nav a {
-  display: block;
-  background: #438bbd;
-  border-radius: 3px;
-  padding: 5px;
-  color: #fff;
-}
-
-.main-nav .active,
-.main-nav a:hover,
-.search-form button:hover {
-  background-color: #275270;
-}
-
 .photo-container ul {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
-  -ms-align-items: flex-start;
   align-items: flex-start;
 }
 
@@ -100,18 +133,31 @@ input {
   width: 50%;
 }
 
-@media only screen and (max-width: 767px)  {
+@media only screen and (max-width: 767px) {
   body {
     padding-top: 2em;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .main-nav ul {
+    flex-direction: column;
   }
 
   .photo-container li {
     margin: auto;
   }
 
+  .search-form {
+    width: 100%;
+    margin: 10px 0;
+  }
 }
 
-@media only screen and (min-width: 768px)  {
+@media only screen and (min-width: 768px) {
   body {
     padding-top: 4em;
   }
@@ -129,6 +175,6 @@ input {
   .main-nav li {
     display: inline-block;
     margin: 10px;
-    width: 100px;
+    width: auto;
   }
 }
